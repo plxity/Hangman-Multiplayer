@@ -1,38 +1,79 @@
-.App {
-  text-align: center;
+/* Global Styles */
+:root {
+  --primary-color: #ffba18;
+  --dark-color: #000;
+  --light-color: #f4f4f4;
+  --danger-color: #dc3545;
+  --success-color: #28a745;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  font-size: 1rem;
+  line-height: 1.6;
+  background-color: #012a4a;
+  color: #fff;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.container {
+  height: 100vh;
+  position: relative;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.landing{
+  position: relative;
+  height: 100vh;
+}
+
+.landing-inner {
+  color: #fff;
+  height: 100%;
+  width: 80%;
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  text-align: center;
+}
+.create-game{
+  width: 150px;
+  height: 50px;
+  border: 1px solid white;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  background-color: #014f86;
   color: white;
 }
+.create-game-container{
+  height: 100%;
+}
+.create-game-container-inner{
+  padding: 100px 100px;
+  height: 100%;
 
-.App-link {
-  color: #61dafb;
+}
+.create-game-heading{
+  display: flex;
+  justify-content: center;
+}
+/* Utilities */
+.mt-10{
+  margin-top: 10px;
+}
+.mt-30{
+  margin-top: 30px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Font sizes */
+.x-large{
+  font-size: 5rem;
+}
+.x-mid{
+  font-size: 3rem;
 }

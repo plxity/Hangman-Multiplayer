@@ -4,7 +4,12 @@ export default function CreateGame() {
   const [questionBox, setQuestionBox] = useState([
     { questionValue: null, answerValue: null, hintValue: null },
   ]);
-  const onSubmit = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const formData ={name,email,questionBox};
+    console.log(formData);
     console.log('Hello');
   };
 
@@ -21,11 +26,17 @@ export default function CreateGame() {
     values.push({ questionValue: null, answerValue: null, hintValue: null });
     setQuestionBox(values);
   };
-  const handleRemove =(i)=>{
+  const handleRemove = (i) => {
     const values = [...questionBox];
-    values.splice(i,1);
+    values.splice(i, 1);
     setQuestionBox(values);
-  }
+  };
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
   return (
     <div className="create-game-container">
       <div className="create-game-container-inner">
@@ -34,18 +45,22 @@ export default function CreateGame() {
         </div>
         <div className="questions-container">
           <div className="create-game-form">
-            <form onSubmit={onSubmit} className="game-form">
+            <form onSubmit={(e)=>onSubmit(e)} className="game-form">
               <input
                 className="input-name input-field mt-15"
                 aria-label="name"
                 type="text"
+                value={name}
                 placeholder="Name"
+                onChange={handleNameChange}
               />
               <input
                 className="input-email input-field mt-15"
                 aria-label="email"
                 type="email"
                 placeholder="Email"
+                value={email}
+                onChange={handleEmailChange}
               />
               <h2 className="questions-heading">Questions</h2>
               <div className="questions-box-container">
@@ -76,7 +91,12 @@ export default function CreateGame() {
                           value={questionbox.hintValue || ''}
                           onChange={(e) => handleChange(idx, e, 'hintValue')}
                         />
-                        <div className="delete-button mt-15" onClick={()=>handleRemove(idx)}>&#10005;</div>
+                        <div
+                          className="delete-button mt-15"
+                          onClick={() => handleRemove(idx)}
+                        >
+                          &#10005;
+                        </div>
                       </div>
                       <div className="mt-15"></div>
                     </Fragment>
@@ -87,6 +107,8 @@ export default function CreateGame() {
                   +
                 </div>
               </div>
+              <input type="submit" value="Create a game" className="create-game mt-30"/>
+              {/* <button className="create-game mt-30"> Create a game</button> */}
             </form>
           </div>
         </div>

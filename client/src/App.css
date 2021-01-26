@@ -25,7 +25,7 @@ body {
   position: relative;
 }
 
-.landing{
+.landing {
   position: relative;
   height: 100vh;
 }
@@ -41,7 +41,7 @@ body {
   justify-content: center;
   text-align: center;
 }
-.create-game{
+.create-game {
   width: 150px;
   height: 50px;
   border: 1px solid white;
@@ -49,31 +49,113 @@ body {
   font-size: 1.1rem;
   background-color: #014f86;
   color: white;
+  transition: all 0.2s;
 }
-.create-game-container{
+.create-game:hover {
+  background-color: #468faf;
+}
+
+.create-game:hover {
+  cursor: pointer;
+}
+.create-game-container {
   height: 100%;
 }
-.create-game-container-inner{
+.create-game-container-inner {
   padding: 100px 100px;
   height: 100%;
-
 }
-.create-game-heading{
+.create-game-heading {
   display: flex;
   justify-content: center;
 }
+
+.game-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.input-field {
+  width: 390px;
+  height: 40px;
+  font-size: 18px;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+.questions-heading {
+  margin-top: 15px;
+}
+.question-box {
+  display: flex;
+  flex-direction: column;
+  border: 1px white solid;
+  padding: 15px 15px;
+}
+.questions-container {
+  margin-top: 20px;
+}
+.questions-box-container {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.add-more {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  text-align: center;
+  color: black;
+  line-height: 2.3rem;
+  font-size: 2rem;
+  transition: all 0.4s;
+}
+.delete-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  text-align: center;
+  color: black;
+  display: flex;
+  font-size: 1.2rem;
+  transition: all 0.4s;
+  justify-content: center;
+  align-items: center;
+  left: 50%;
+  position: relative;
+  transform: translateX(-50%);
+}
+.add-more:hover,
+.delete-button:hover {
+  cursor: pointer;
+  background-color: black;
+  color: white;
+}
 /* Utilities */
-.mt-10{
+.mt-5 {
+  margin-top: 5px;
+}
+.mt-10 {
   margin-top: 10px;
 }
-.mt-30{
+.mt-30 {
   margin-top: 30px;
+}
+.mt-15 {
+  margin-top: 15px;
+}
+.mb-40 {
+  margin-bottom: 40px;
 }
 
 /* Font sizes */
-.x-large{
+.x-large {
   font-size: 5rem;
 }
-.x-mid{
+.x-mid {
   font-size: 3rem;
 }

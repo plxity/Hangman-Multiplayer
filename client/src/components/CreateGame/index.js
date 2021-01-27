@@ -1,16 +1,24 @@
 import React, { Fragment, useState } from 'react';
+import api from '../../utils/api';
+// import { useHistory } from "react-router-dom";
 
-export default function CreateGame() {
+export default function CreateGame({history}) {
+  // const history = useHistory();
   const [questionBox, setQuestionBox] = useState([
     { questionValue: null, answerValue: null, hintValue: null },
   ]);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const onSubmit = async (e) => {
+    
     e.preventDefault();
-    const formData ={name,email,questionBox};
-    console.log(formData);
-    console.log('Hello');
+    const questions = questionBox
+    const formData = { name, email, questions };
+    api.post('/user/newuser', formData)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+      history.push('/newgameid');
+    
   };
 
   const handleChange = (i, e, toBeChanged) => {
@@ -45,7 +53,7 @@ export default function CreateGame() {
         </div>
         <div className="questions-container">
           <div className="create-game-form">
-            <form onSubmit={(e)=>onSubmit(e)} className="game-form">
+            <form onSubmit={(e) => onSubmit(e)} className="game-form">
               <input
                 className="input-name input-field mt-15"
                 aria-label="name"
@@ -107,7 +115,11 @@ export default function CreateGame() {
                   +
                 </div>
               </div>
-              <input type="submit" value="Create a game" className="create-game mt-30"/>
+              <input
+                type="submit"
+                value="Create a game"
+                className="create-game mt-30"
+              />
               {/* <button className="create-game mt-30"> Create a game</button> */}
             </form>
           </div>

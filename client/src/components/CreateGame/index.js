@@ -1,32 +1,32 @@
 import React, { Fragment, useState } from 'react';
 import api from '../../utils/api';
-// import { useHistory } from "react-router-dom";
 
-export default function CreateGame({history}) {
-  // const history = useHistory();
+export default function CreateGame({ history }) {
   const [questionBox, setQuestionBox] = useState([
     { questionValue: null, answerValue: null, hintValue: null },
   ]);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  // const [gameId, setGameId] = useState('');
   const onSubmit = async (e) => {
-    
     e.preventDefault();
-    const questions = questionBox
+    const questions = questionBox;
     const formData = { name, email, questions };
-    api.post('/user/newuser', formData)
-      .then((res) => console.log(res))
+    var gameId;
+    await api
+      .post('/user/newuser', formData)
+      .then((res) => {
+        gameId = res.data;
+        return res;
+      })
       .catch((err) => console.log(err));
-      history.push('/newgameid');
-    
+    history.push({ pathname: '/newgameid', state: { gameId: gameId } });
   };
 
   const handleChange = (i, e, toBeChanged) => {
-    console.log(toBeChanged, i);
     const values = [...questionBox];
     values[i][toBeChanged] = e.target.value;
     setQuestionBox(values);
-    console.log(values);
   };
 
   const addMoreQuestion = () => {
@@ -61,6 +61,7 @@ export default function CreateGame({history}) {
                 value={name}
                 placeholder="Name"
                 onChange={handleNameChange}
+                required={true}
               />
               <input
                 className="input-email input-field mt-15"
@@ -69,6 +70,7 @@ export default function CreateGame({history}) {
                 placeholder="Email"
                 value={email}
                 onChange={handleEmailChange}
+                required={true}
               />
               <h2 className="questions-heading">Questions</h2>
               <div className="questions-box-container">
@@ -81,6 +83,7 @@ export default function CreateGame({history}) {
                           aria-label="Question"
                           placeholder="Question"
                           value={questionbox.questionValue || ''}
+                          required={true}
                           onChange={(e) =>
                             handleChange(idx, e, 'questionValue')
                           }
@@ -91,6 +94,7 @@ export default function CreateGame({history}) {
                           placeholder="Answer"
                           value={questionbox.answerValue || ''}
                           onChange={(e) => handleChange(idx, e, 'answerValue')}
+                          required={true}
                         />
                         <input
                           className="input-hint input-field mt-5"
@@ -118,9 +122,8 @@ export default function CreateGame({history}) {
               <input
                 type="submit"
                 value="Create a game"
-                className="create-game mt-30"
+                className="create-game mt-15 mb-40"
               />
-              {/* <button className="create-game mt-30"> Create a game</button> */}
             </form>
           </div>
         </div>

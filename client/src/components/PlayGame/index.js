@@ -15,7 +15,7 @@ function App(props) {
   const [playable, setPlayable] = useState(true);
   const [correctLetters, setCorrectLetters] = useState([]);
   const [wrongLetters, setWrongLetters] = useState([]);
-  const [showNotification, setShowNotification] = useState(false);
+  const [showNotification, setShowNotification] = useState(true);
   const [questions, setQuestions] = useState([]);
   const [index, setIndex] = useState(0);
   const [curQuestion, setCurQuestion] = useState('');

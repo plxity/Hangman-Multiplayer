@@ -303,6 +303,9 @@ th {
   padding: 15px 20px;
   position: absolute;
   text-align: center;
+  bottom: -50px;
+  left: 50%;
+  width: 310px;
 }
 
 .notification-container p {

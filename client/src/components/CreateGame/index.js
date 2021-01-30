@@ -72,7 +72,7 @@ export default function CreateGame({ history }) {
                 onChange={handleEmailChange}
                 required={true}
               />
-              <h2 className="questions-heading">Questions</h2>
+              <h2 className="questions-heading">Questions you want to ask!</h2>
               <div className="questions-box-container">
                 {questionBox.map((questionbox, idx) => {
                   return (

@@ -248,7 +248,7 @@ th {
 }
 
 .letter {
-  border-bottom: 3px solid black;
+  border-bottom: 3px solid white;
   display: inline-flex;
   font-size: 30px;
   align-items: center;

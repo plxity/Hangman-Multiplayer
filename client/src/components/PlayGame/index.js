@@ -1,138 +1,142 @@
 import React, { useState, useEffect } from 'react';
+import Header from './Header';
+import Figure from './Figure';
+import WrongLetters from './WrongLetters';
+import Word from './Word';
+import Popup from './Popup';
+import Notification from './Notification';
+import { showNotification as show, checkWin } from '../../helpers/helpers';
 import api from '../../utils/api';
-let index = 0;
-export default function PlayGame(props) {
-  let [questions, setQuestions] = useState([]);
 
-  let [checkWrong, setCheckWrong] = useState(0);
-  let [score, setScore] = useState('');
-  let [hangman, setHangman] = useState(0);
-  let [wrongLetter, setWrongLetter] = useState([]);
-  let [correctLetter, setCorrectLetter] = useState([]);
-  let [seletctedWord, setSelectedWord] = useState('');
+const words = ['application', 'programming', 'interface', 'wizard'];
+let selectedWord = words[Math.floor(Math.random() * words.length)];
 
-  const typeWords = (e) => {
-    if (e.keyCode >= 65 && e.keyCode <= 90) {
-      const letter = e.key;
-      if (seletctedWord.includes(letter)) {
-        if (!correctLetter.includes(letter)) {
-          correctLetter.push(letter);
-          displayWord();
-        } else {
-          // showNotification();
-        }
-      } else {
-        if (!wrongLetter.includes(letter)) {
-          wrongLetter.push(letter);
-          updateWrongLetterEl();
-        }
-      }
-    }
-  };
+function App(props) {
+  const [playable, setPlayable] = useState(true);
+  const [correctLetters, setCorrectLetters] = useState([]);
+  const [wrongLetters, setWrongLetters] = useState([]);
+  const [showNotification, setShowNotification] = useState(false);
+  const [questions, setQuestions] = useState([]);
+  const [index, setIndex] = useState(0);
+  const [curQuestion, setCurQuestion] = useState('');
+  const [curAnswer, setCurAnswer] = useState('');
+  const [hangmanUsed, setHangmanUsed] = useState(0);
+  const [score, setScore] = useState(0);
+  const [curHint, setCurHint] = useState('');
 
-  const updateWrongLetterEl = () => {
-    const figureParts = document.querySelectorAll('.figure-part');
-    const wrongLettersEl = document.getElementById('wrong-letters');
-    wrongLettersEl.innerHTML = `${wrongLetter.length > 0 ? '<p>Wrong</p>' : ''}
-    ${wrongLetter.map((wrongWord) => {
-      return `<span>${wrongWord}</span>`;
-    })}`;
-    if (checkWrong>= figureParts.length) {
-      
-     
-      setHangman(hangman + 1);
-      removeAllSvgMark();
-      figureParts[0].style.display = 'block';
-      setCheckWrong(1);
-    } else {
-      console.log(checkWrong);
-      figureParts[checkWrong].style.display = 'block';
-      setCheckWrong(checkWrong + 1);
-    }
-  };
-  const displayWord = () => {
-    const wordEl = document.getElementById('word');
-    wordEl.innerHTML = `
-    ${seletctedWord
-      .split('')
-      .map((letter) => {
-        return `<span class="letters">${
-          correctLetter.includes(letter) ? letter : ''
-        }</span>`;
-      })
-      .join('')}`;
-    const innerWord = wordEl.innerText.replace(/\n/g, '');
-
-    if (innerWord === seletctedWord) {
-      // index++;
-      console.log("let's move next");
-    }
-  };
-  const fetchGameData = async (id) => {
+  const fetchQuestions = async () => {
+    let data = false
     const gameData = await api
       .get(`/user/getuser/${props.match.params.id}`)
-      .then((res) => res)
-      .catch((err) => console.log(err));
-    setQuestions(gameData.data.questions);
-    setSelectedWord(gameData.data.questions[index].answerValue);
+      .then((res) => {
+        data = true;
+        return res;
+      })
+      .catch((err) => {
+        alert('Invalid Link');
+        props.history.push('/');
+        return;
+      });
+    if (data) {
+      setQuestions([...gameData.data.questions]);
+    }
   };
-  const removeAllSvgMark = () => {
-    document.querySelectorAll('.figure-part').forEach((svg) => {
-      svg.style.display = 'none';
-    });
+  const increaseIndex = () => {
+    console.log('increase', index);
+    setIndex((index) => index + 1);
   };
+  const setCurrentQuestion = () => {
+    setCurQuestion(questions[index].questionValue);
+  };
+  const setCurrentHint = () => {
+    setCurHint(questions[index].hintValue);
+  };
+  const setCurrentAnswer = () => {
+    setCurAnswer(questions[index].answerValue);
+  };
+  const incrementHangman = () => {
+    setHangmanUsed((hangmanUsed) => hangmanUsed + 1);
+  };
+  //Checking Questions Array
+  useEffect(() => {
+    console.log(index);
+    if (index == questions.length && questions.length > 0) {
+      props.history.push({
+        pathname: '/submitscore',
+        state: { score: score, id: props.match.params.id },
+      });
+    } else if (questions.length > 0) {
+      console.log('hello');
+      setCurrentQuestion();
+      setCurrentAnswer();
+      setCurrentHint();
+      setCorrectLetters([]);
+      setWrongLetters([]);
+    }
+  }, [questions, index]);
 
   useEffect(() => {
-    fetchGameData(props.match.params.id);
-    document.addEventListener('keydown', typeWords, false);
-    return () => document.removeEventListener('keydown', typeWords);
-  }, [props.match.params.id, typeWords]);
+    fetchQuestions();
+  }, [props.match.params.id]);
 
   useEffect(() => {
-    displayWord();
-  }, [seletctedWord]);
+    const handleKeydown = (event) => {
+      const { key, keyCode } = event;
+      if (playable && keyCode >= 65 && keyCode <= 90) {
+        const letter = key.toLowerCase();
+        if (curAnswer.includes(letter)) {
+          if (!correctLetters.includes(letter)) {
+            setCorrectLetters((currentLetters) => [...currentLetters, letter]);
+          } else {
+            show(setShowNotification);
+          }
+        } else {
+          if (!wrongLetters.includes(letter)) {
+            setWrongLetters((currentLetters) => [...currentLetters, letter]);
+          } else {
+            show(setShowNotification);
+          }
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeydown);
+    return () => window.removeEventListener('keydown', handleKeydown);
+  }, [correctLetters, wrongLetters, playable, curAnswer, curQuestion]);
+
+  useEffect(() => {
+    console.log('hello0000', correctLetters, curAnswer, wrongLetters);
+    if (
+      checkWin(correctLetters, wrongLetters, curAnswer) === 'lose' &&
+      wrongLetters.length > 0
+    ) {
+      console.log('hello,wrong');
+      setIndex((index) => index + 1);
+    }
+    if (
+      checkWin(correctLetters, wrongLetters, curAnswer) === 'win' &&
+      correctLetters.length > 0
+    ) {
+      setScore((score) => score + 1);
+      setIndex((index) => index + 1);
+    }
+  }, [correctLetters, wrongLetters]);
+
   return (
-    <div className="game-container">
-      <h1 className="question-heading mt-30 center ">
-        {questions.length > 0 &&
-          `${index + 1}. ` + questions[index].questionValue}
-      </h1>
-      <h5 className="center mt-10">
-        {questions.length > 0 &&
-          questions[index].hintValue.length > 0 &&
-          'HINT: ' + questions[index].hintValue}
-      </h5>
-      <svg height="250" width="200" className="figure-container">
-        <line x1="60" y1="20" x2="140" y2="20" />
-        <line x1="140" x2="140" y1="20" y2="50" />
-        <line x1="60" y1="20" x2="60" y2="230" />
-        <line x1="20" x2="100" y1="230" y2="230" />
-
-        <circle cx="140" cy="70" r="20" className="figure-part" />
-
-        <line x1="140" y1="90" x2="140" y2="150" className="figure-part" />
-
-        <line x1="140" y1="120" x2="120" y2="100" className="figure-part" />
-        <line x1="140" y1="120" x2="160" y2="100" className="figure-part" />
-
-        <line x1="140" y1="150" x2="120" y2="180" className="figure-part" />
-        <line x1="140" y1="150" x2="160" y2="180" className="figure-part" />
-      </svg>
-      <div className="wrong-letters-container">
-        <div id="wrong-letters"></div>
+    <>
+      <Header
+        question={curQuestion}
+        answer={curAnswer}
+        index={index}
+        hint={curHint}
+      />
+      <div className="game-container">
+        <Figure wrongLetters={wrongLetters} incrementHangman={setHangmanUsed} />
+        <WrongLetters wrongLetters={wrongLetters} />
+        <Word selectedWord={curAnswer} correctLetters={correctLetters} />
       </div>
-      <div className="word" id="word"></div>
-      <div> Total Hanged man : {hangman}</div>
-
-      {/* {
-      questions[index].questionValue
-    } */}
-      <div className="popup-container" id="popup-container">
-        <div className="popup">
-          <h2 id="final-message">You have won</h2>
-          <button id="play-button">Play Again</button>
-        </div>
-      </div>
-    </div>
+      {showNotification && <Notification showNotification={showNotification} />}
+    </>
   );
 }
+
+export default App;

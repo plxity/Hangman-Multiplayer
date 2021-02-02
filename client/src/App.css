@@ -1,11 +1,3 @@
-/* Global Styles */
-:root {
-  --primary-color: #ffba18;
-  --dark-color: #000;
-  --light-color: #f4f4f4;
-  --danger-color: #dc3545;
-  --success-color: #28a745;
-}
 
 * {
   box-sizing: border-box;
@@ -328,6 +320,9 @@ th {
 .header-container {
   padding: 25px 25px;
   text-align: center;
+}
+.attempts{
+  font-size: 20px;
 }
 /* Utilities */
 .center {

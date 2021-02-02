@@ -14,7 +14,7 @@ export default function SuubmitScore(props) {
       .post('/user/storescore', formData)
       .then((res) => res)
       .catch((err) => console.log(err));
-    alert('Score Submitted!')
+    alert('Score Submitted!');
     props.history.push('/');
   };
 
@@ -26,6 +26,7 @@ export default function SuubmitScore(props) {
         <input
           type="text"
           className="input-field mt-15"
+          aria-label="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Enter Name"
@@ -34,7 +35,7 @@ export default function SuubmitScore(props) {
         <button onClick={(e) => submitScore(e)} className="mt-10 create-game">
           Submit Score
         </button>
-        <p className="mt-15" style={{fontSize:'20px'}}>
+        <p className="mt-15" style={{ fontSize: '20px' }}>
           Hi, Your score is : {props.location.state.score}
         </p>
       </div>

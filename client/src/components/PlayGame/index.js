@@ -3,13 +3,10 @@ import Header from './Header';
 import Figure from './Figure';
 import WrongLetters from './WrongLetters';
 import Word from './Word';
-import Popup from './Popup';
 import Notification from './Notification';
 import { showNotification as show, checkWin } from '../../helpers/helpers';
 import api from '../../utils/api';
 
-const words = ['application', 'programming', 'interface', 'wizard'];
-let selectedWord = words[Math.floor(Math.random() * words.length)];
 
 function App(props) {
   const [playable, setPlayable] = useState(true);
@@ -20,12 +17,11 @@ function App(props) {
   const [index, setIndex] = useState(0);
   const [curQuestion, setCurQuestion] = useState('');
   const [curAnswer, setCurAnswer] = useState('');
-  const [hangmanUsed, setHangmanUsed] = useState(0);
   const [score, setScore] = useState(0);
   const [curHint, setCurHint] = useState('');
 
   const fetchQuestions = async () => {
-    let data = false
+    let data = false;
     const gameData = await api
       .get(`/user/getuser/${props.match.params.id}`)
       .then((res) => {
@@ -41,10 +37,6 @@ function App(props) {
       setQuestions([...gameData.data.questions]);
     }
   };
-  const increaseIndex = () => {
-    console.log('increase', index);
-    setIndex((index) => index + 1);
-  };
   const setCurrentQuestion = () => {
     setCurQuestion(questions[index].questionValue);
   };
@@ -54,19 +46,14 @@ function App(props) {
   const setCurrentAnswer = () => {
     setCurAnswer(questions[index].answerValue);
   };
-  const incrementHangman = () => {
-    setHangmanUsed((hangmanUsed) => hangmanUsed + 1);
-  };
-  //Checking Questions Array
+
   useEffect(() => {
-    console.log(index);
-    if (index == questions.length && questions.length > 0) {
+    if (index === questions.length && questions.length > 0) {
       props.history.push({
         pathname: '/submitscore',
         state: { score: score, id: props.match.params.id },
       });
     } else if (questions.length > 0) {
-      console.log('hello');
       setCurrentQuestion();
       setCurrentAnswer();
       setCurrentHint();
@@ -104,12 +91,10 @@ function App(props) {
   }, [correctLetters, wrongLetters, playable, curAnswer, curQuestion]);
 
   useEffect(() => {
-    console.log('hello0000', correctLetters, curAnswer, wrongLetters);
     if (
       checkWin(correctLetters, wrongLetters, curAnswer) === 'lose' &&
       wrongLetters.length > 0
     ) {
-      console.log('hello,wrong');
       setIndex((index) => index + 1);
     }
     if (
@@ -128,9 +113,10 @@ function App(props) {
         answer={curAnswer}
         index={index}
         hint={curHint}
+        remainingChances={wrongLetters.length}
       />
       <div className="game-container">
-        <Figure wrongLetters={wrongLetters} incrementHangman={setHangmanUsed} />
+        <Figure wrongLetters={wrongLetters} />
         <WrongLetters wrongLetters={wrongLetters} />
         <Word selectedWord={curAnswer} correctLetters={correctLetters} />
       </div>

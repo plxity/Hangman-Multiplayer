@@ -9,7 +9,7 @@ export default function Landing() {
         <h2 className="mt-10">
           A fun game to see how much your friends know you! 👯
         </h2>
-        <Link to='/creategame'>
+        <Link to="/creategame">
           <button className="create-game mt-30" onClick={redirectToCreateGame}>
             Create a game
           </button>

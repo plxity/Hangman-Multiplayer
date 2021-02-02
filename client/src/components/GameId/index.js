@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import clipboard from '../../icons/clipboard.svg';
 
 export default function GameId({ location }) {
@@ -15,7 +15,7 @@ export default function GameId({ location }) {
   };
   return (
     <div className="game-id-container">
-      <h1 className="game-created-heading">Game created succesfully!</h1>
+      <h1 className="game-created-heading">Game created successfully!</h1>
       <div className="clipboard-container mt-15">
         <div className="game-link">
           <a
@@ -24,6 +24,7 @@ export default function GameId({ location }) {
               location.state.gameId
             }
             target="_blank"
+            rel="noreferrer"
           >
             hangman-multiplayer.vercel.app/playgame/{location.state.gameId}
           </a>
@@ -32,7 +33,7 @@ export default function GameId({ location }) {
           className="clipboard-icon "
           onClick={() => copyToClipboard(location.state.gameId)}
         >
-          <img src={clipboard} height="100%" width="40" />
+          <img src={clipboard} height="100%" width="40" alt="Clipboard logo" />
         </div>
       </div>
       <small className="mt-15"> Share link with friends!</small>
@@ -44,6 +45,7 @@ export default function GameId({ location }) {
               location.state.gameId
             }
             target="_blank"
+            rel="noreferrer"
           >
             hangman-multiplayer.vercel.app/showscore/{location.state.gameId}
           </a>
@@ -52,10 +54,13 @@ export default function GameId({ location }) {
           className="clipboard-icon "
           onClick={() => copyToClipboard(location.state.gameId)}
         >
-          <img src={clipboard} height="100%" width="40" />
+          <img src={clipboard} height="100%" width="40" alt="Clipboard logo"/>
         </div>
       </div>
-      <small className="mt-15"> View friends response here! Save the link</small>
+      <small className="mt-15">
+        {' '}
+        View friends response here! Save the link
+      </small>
     </div>
   );
 }

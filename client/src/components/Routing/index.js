@@ -14,7 +14,7 @@ const router = (props) => {
       <Route path="/newgameid" component={GameId} />
       <Route path="/checkscore/:id" component={GameId} />
       <Route path="/submitscore" component={SubmitScore} />
-      <Route path='/showscore/:id' component={ShowScore}/>
+      <Route path="/showscore/:id" component={ShowScore} />
       {/* <Route path='*'  component={NotFound} /> */}
     </section>
   );

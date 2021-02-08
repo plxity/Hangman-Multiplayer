@@ -7,7 +7,6 @@ import Notification from './Notification';
 import { showNotification as show, checkWin } from '../../helpers/helpers';
 import api from '../../utils/api';
 
-
 function App(props) {
   const [playable, setPlayable] = useState(true);
   const [correctLetters, setCorrectLetters] = useState([]);

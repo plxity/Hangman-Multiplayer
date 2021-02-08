@@ -5,7 +5,7 @@ import PlayGame from '../PlayGame/index';
 import GameId from '../GameId/index';
 import SubmitScore from '../SubmitScore/index';
 import ShowScore from '../ShowScore/index';
-// import NotFound from '../NotFound/index';
+
 const router = (props) => {
   return (
     <section className="container">
@@ -15,7 +15,6 @@ const router = (props) => {
       <Route path="/checkscore/:id" component={GameId} />
       <Route path="/submitscore" component={SubmitScore} />
       <Route path="/showscore/:id" component={ShowScore} />
-      {/* <Route path='*'  component={NotFound} /> */}
     </section>
   );
 };

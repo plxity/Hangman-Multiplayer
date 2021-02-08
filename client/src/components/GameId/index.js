@@ -54,7 +54,7 @@ export default function GameId({ location }) {
           className="clipboard-icon "
           onClick={() => copyToClipboard(location.state.gameId)}
         >
-          <img src={clipboard} height="100%" width="40" alt="Clipboard logo"/>
+          <img src={clipboard} height="100%" width="40" alt="Clipboard logo" />
         </div>
       </div>
       <small className="mt-15">

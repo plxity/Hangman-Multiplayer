@@ -9,7 +9,7 @@ const Header = ({ question, answer, index, hint, remainingChances }) => {
           {question}{' '}
         </h1>
         <small className="mt-15">
-          Hint: {hint!= null ? hint : 'Not provided'}
+          Hint: {hint != null ? hint : 'Not provided'}
         </small>
         <p className="mt-10">Find the answer - Enter a letter</p>
         <p className="mt-15 attempts">Attempts left: {6 - remainingChances}</p>

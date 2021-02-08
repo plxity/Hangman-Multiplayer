@@ -5,21 +5,21 @@
 </div>
 
 
-# Hangman
+# Hangman 🎮
 
 It is a fun game to see how well your friends know you. It is based on an actual Hangman game.
 
-## Link 
+## Link 🔗
  Link to the game - https://hangman-multiplayer.plxity.vercel.app/
 
-## Demo 
+## Demo ⚡️
 
 <img src="./DemoPics/demo1.png" height="400" width="700">
 <img src="./DemoPics/demo2.png" height="400" width="700">
 <img src="./DemoPics/demo3.png" height="400" width="700">
 
 
-## Tech Stack
+## Tech Stack 👨🏻‍💻
 
 - HTML
 - CSS

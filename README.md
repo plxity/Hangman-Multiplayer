@@ -14,6 +14,11 @@ It is a fun game to see how much your friends know you. It is based on an actual
 
 ## Demo 
 
+![LandingPage](./demo1.png)
+![QuestionPage](./demo2.png)
+![GameScreen](./demo3.png)
+
+
 
 ## Tech Stack
 

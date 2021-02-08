@@ -14,10 +14,9 @@ It is a fun game to see how much your friends know you. It is based on an actual
 
 ## Demo 
 
-![LandingPage](./demo1.png)
-![QuestionPage](./demo2.png)
-![GameScreen](./demo3.png)
-
+<img src="./DemoPics/demo1.png" height="400" width="700">
+<img src="./DemoPics/demo2.png" height="400" width="700">
+<img src="./DemoPics/demo3.png" height="400" width="700">
 
 
 ## Tech Stack

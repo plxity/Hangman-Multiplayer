@@ -7,7 +7,7 @@
 
 # Hangman
 
-It is a fun game to see how much your friends know you. It is based on an actual Hangman game.
+It is a fun game to see how well your friends know you. It is based on an actual Hangman game.
 
 ## Link 
  Link to the game - https://hangman-multiplayer.plxity.vercel.app/

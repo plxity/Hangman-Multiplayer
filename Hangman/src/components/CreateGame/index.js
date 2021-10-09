@@ -7,9 +7,11 @@ export default function CreateGame({ history }) {
   ]);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [creating, setCreating] = useState(false);
   // const [gameId, setGameId] = useState('');
   const onSubmit = async (e) => {
     e.preventDefault();
+    setCreating(true);
     const questions = questionBox;
     const formData = { name, email, questions };
     var gameId;
@@ -17,6 +19,7 @@ export default function CreateGame({ history }) {
       .post('/user/newuser', formData)
       .then((res) => {
         gameId = res.data;
+        setCreating(false);
         return res;
       })
       .catch((err) => console.log(err));
@@ -121,7 +124,7 @@ export default function CreateGame({ history }) {
               </div>
               <input
                 type="submit"
-                value="Create a game"
+                value={creating ? 'Creating...' : 'Create a Game'}
                 className="create-game mt-15 mb-40"
               />
             </form>

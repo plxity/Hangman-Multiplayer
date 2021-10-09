@@ -28,7 +28,7 @@ export default function CreateGame({ history }) {
 
   const handleChange = (i, e, toBeChanged) => {
     const values = [...questionBox];
-    values[i][toBeChanged] = e.target.value;
+    values[i][toBeChanged] = e.target.value.toLowerCase();;
     setQuestionBox(values);
   };
 
